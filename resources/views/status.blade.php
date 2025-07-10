@@ -23,6 +23,7 @@
             <li class="list-group-item"><strong>Order ID:</strong> <span id="res-order"></span></li>
             <li class="list-group-item"><strong>Status Transaksi:</strong> <span id="res-status"></span></li>
             <li class="list-group-item"><strong>Fraud Status:</strong> <span id="res-fraud"></span></li>
+            <li class="list-group-item"><strong>Metode Pembayaran:</strong> <span id="res-payment"></span></li>
             <li class="list-group-item"><strong>Pesan:</strong> <span id="res-message"></span></li>
         </ul>
     </div>
@@ -45,6 +46,7 @@
                 document.getElementById('res-order').innerText = data.order_id;
                 document.getElementById('res-status').innerText = data.status;
                 document.getElementById('res-fraud').innerText = data.fraud || '-';
+                document.getElementById('res-payment').innerText = data.payment_type || '-';
                 document.getElementById('res-message').innerText = data.message;
 
                 document.getElementById('result').style.display = 'block';

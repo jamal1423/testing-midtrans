@@ -27,7 +27,7 @@ class PaymentController extends Controller
         $params = [
             'transaction_details' => [
                 'order_id' => 'ORDER-' . time(),
-                'gross_amount' => 10000, // static price Rp10.000
+                'gross_amount' => 10000,
             ],
             'customer_details' => [
                 'first_name' => 'Jamal',
@@ -43,10 +43,10 @@ class PaymentController extends Controller
     {
         try {
             $status = Transaction::status($orderId);
-            // dd($orderId);
-            // Ambil status yang penting
+
             $transactionStatus = $status->transaction_status;
-            $fraudStatus = $status->fraud_status ?? null;
+            $fraudStatus       = $status->fraud_status ?? null;
+            $paymentType       = $status->payment_type ?? '-';
 
             $statusText = match ($transactionStatus) {
                 'capture'     => $fraudStatus == 'challenge' ? 'Perlu verifikasi manual' : 'Transaksi berhasil',
@@ -59,10 +59,11 @@ class PaymentController extends Controller
             };
 
             return response()->json([
-                'order_id'    => $orderId,
-                'status'      => $transactionStatus,
-                'fraud'       => $fraudStatus,
-                'message'     => $statusText,
+                'order_id'       => $orderId,
+                'status'         => $transactionStatus,
+                'fraud'          => $fraudStatus,
+                'payment_type'   => $paymentType,
+                'message'        => $statusText,
             ]);
         } catch (\Exception $e) {
             return response()->json([
